@@ -621,11 +621,23 @@ function init(staticryptConfig, templateConfig) {
         }
         const plainHTML = result.decoded;
 
+        async function copyTextToClipboard(text) {
+              try {
+                await navigator.clipboard.writeText(text);
+                console.log('Text copied to clipboard:',   
+             text);
+              } catch (err) {
+                console.error('Failed to copy text:',   
+             err);
+              }
+        }
+
+
         // if the user configured a callback call it, otherwise just replace the whole HTML
         if (typeof replaceHtmlCallback === "function") {
             replaceHtmlCallback(plainHTML);
         } else {
-            alert(plainHTML);
+            copyTextToClipboard(plainHTML);
             document.write(plainHTML);
             document.close();
         }
